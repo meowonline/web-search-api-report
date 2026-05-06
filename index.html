@@ -107,7 +107,7 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <div class="summary-card"><h4>市场规模 (2026E)</h4><div class="value">$100M–$200M</div><div class="desc">独立三方 Web Search API，YoY ~100%</div></div>
 <div class="summary-card"><h4>核心驱动力</h4><div class="value">Bing退出 + Agent爆发</div><div class="desc">Bing API 2025.8退役 + AI Agent $7-12B</div></div>
 <div class="summary-card"><h4>头部融资</h4><div class="value">$130M+</div><div class="desc">Parallel $130M / Exa $107M+ / Tavily $275M收购</div></div>
-<div class="summary-card"><h4>推荐路径</h4><div class="value">路径B或E</div><div class="desc">垂直精度或非英语市场，$5M-30M，1-2年变现</div></div>
+<div class="summary-card"><h4>推荐路径</h4><div class="value">垂直行业精度 或 非英语市场</div><div class="desc">聚焦法律/金融高精度需求，或切入日韩等语义空白市场，$5M-30M启动，1-2年变现</div></div>
 </div>
 <div class="highlight-box"><strong>机会窗口：</strong><ul>
 <li><strong>机会一：</strong>垂直行业高精度需求（法律/金融/生命科学）— 支付意愿显著高于通用</li>
@@ -345,7 +345,7 @@ var KB=[
 {id:'g1',s:'ch4',t:'GTM模式',x:'三种GTM:1)框架生态(LangChain/MCP默认);2)云厂商联合(IBM+Tavily,Snowflake+Brave);3)Benchmark固化(Linkup SimpleQA)。不依赖重销售。',k:['GTM','获客','销售','怎么卖','模式']},
 {id:'g2',s:'ch4',t:'生态选择',x:'选API即选生态。IBM选Tavily为Watsonx Web入口;Snowflake选Brave为Cortex数据层;KPMG选Linkup为垂直合规。中小团队被LangChain默认引导。',k:['生态','选择','为什么选','IBM','Snowflake']},
 {id:'o1',s:'ch5',t:'三个机会',x:'结构性机会:1)垂直高精度(法律/金融,高支付);2)非英语市场洼地(日/韩/阿拉伯语本地化空白);3)实时性极端(秒级vs预索引矛盾)。',k:['机会','方向','做什么','进入','切入']},
-{id:'o2',s:'ch5',t:'路径选择',x:'五条:A自建PLG(Exa,$50M+,3-5年);B垂直标杆(Linkup,$5-20M,1-2年);C独立索引(Brave,$100M+);D资本叙事(Parallel,$100M+极高风险);E非英语垂直($10-30M,1-2年)。资源有限推荐B或E。',k:['路径','怎么做','选择','推荐','方案','策略']},
+{id:'o2',s:'ch5',t:'路径选择',x:'五条:A自建PLG(Exa,$50M+,3-5年);B垂直标杆(Linkup,$5-20M,1-2年);C独立索引(Brave,$100M+);D资本叙事(Parallel,$100M+极高风险);E非英语垂直($10-30M,1-2年)。资源有限推荐：垂直行业精度（法律/金融）或非英语市场（日韩/阿拉伯语）。',k:['路径','怎么做','选择','推荐','方案','策略']},
 {id:'o3',s:'ch5',t:'不建议进入',x:'不建议:1)融资<$50M无索引;2)通用英语无差异化;3)无顶级背景走资本叙事;4)纯商务无工程;5)期望6月盈利(最短1-2年,Exa用了4年)。',k:['不建议','不要','风险','失败','不适合','别做']},
 {id:'o4',s:'ch5',t:'财务基准',x:'Exa融资$107M到$10M ARR(10:1)用了4年。Tavily $275M收购时100万开发者。定价Tavily $8/1k,Brave $3-5/1k。估值Exa $700M,Parallel $740M。',k:['财务','钱','多少','ARR','估值','收入']},
 {id:'o5',s:'ch5',t:'竞争风险',x:'风险:1)巨头回防(Azure/Vertex若降价);2)头部集中(Brave准垂断);3)技术替代(LLM增强);4)定价下行($3-10可能压缩);5)Parallel验证($740M估值vs不足1年产品)。',k:['风险','威胁','竞争','问题','挑战']},
@@ -373,7 +373,7 @@ secs.forEach(function(s){obs.observe(s)});
 
 var curSlide=0;
 var slides=[
-{t:'Web Search API 市场与机会',c:'<div class="summary-grid"><div class="summary-card"><h4>市场规模</h4><div class="value">$100M-$200M</div><div class="desc">2026E, YoY~100%</div></div><div class="summary-card"><h4>驱动力</h4><div class="value">Bing退出+Agent爆发</div></div><div class="summary-card"><h4>推荐路径</h4><div class="value">B或E</div><div class="desc">$5-30M, 1-2年</div></div></div>'},
+{t:'Web Search API 市场与机会',c:'<div class="summary-grid"><div class="summary-card"><h4>市场规模</h4><div class="value">$100M-$200M</div><div class="desc">2026E, YoY~100%</div></div><div class="summary-card"><h4>驱动力</h4><div class="value">Bing退出+Agent爆发</div></div><div class="summary-card"><h4>推荐路径</h4><div class="value">垂直精度 / 非英语市场</div><div class="desc">法律金融高精度 或 日韩语义空白，$5-30M</div></div></div>'},
 {t:'1. 市场规模',c:'<ul><li>2025: $50M-$100M → 2026: $100M-$200M (YoY~100%)</li><li>Bing API 2025.8退役 + AI Agent $7-12B</li><li>Google Custom Search停止新客户（2027.1下线）</li><li>定义：独立三方API，不含广义AI搜索/SERP代理/云内嵌</li></ul>'},
 {t:'2. 竞争格局',c:'<ul><li><b>Exa</b>: 语义领先, $107M+融资, $10M ARR, 11x</li><li><b>Tavily</b>: $275M被收购, 100万开发者, LangChain</li><li><b>Brave</b>: 400亿页唯一独立索引, $3-5/1k</li><li><b>Parallel</b>: $130M融资, $740M估值, 前Twitter CEO</li><li><b>Linkup</b>: 垂直精度, KPMG客户, $10M种子</li></ul>'},
 {t:'3. 需求侧',c:'<ul><li><b>第一层</b> AI平台(IBM/Snowflake) → 战略年度合同</li><li><b>第二层</b> AI原生(Cursor/Lovable) → 规模消耗</li><li><b>第三层</b> 传统企业(KPMG) → 高客单价POC</li><li><b>第四层</b> 中小开发者 → 被框架默认引导</li></ul><p>定价: Tavily $8/1k · Brave $3-5/1k · SERP $0.3-1/1k</p>'},
