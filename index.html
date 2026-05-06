@@ -113,7 +113,7 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <li><strong>机会一：</strong>垂直行业高精度需求（法律/金融/生命科学）— 支付意愿显著高于通用</li>
 <li><strong>机会二：</strong>非英语市场语义搜索洼地 — 技术成熟但本地化空白</li>
 <li><strong>机会三：</strong>实时性极端场景（金融交易/危机监测）— 与预索引根本矛盾</li></ul></div>
-<div class="highlight-box warning"><strong>关键风险：</strong>巨头回防（Vertex AI / Azure Grounding）；LLM能力增强降低外部依赖；定价($3-10/1k)面临下行压力。</div>
+<div class="highlight-box warning"><strong>关键风险：</strong>巨头回防（Vertex AI / Azure Grounding）；收购整合加速（Elastic买Jina AI, Nebius买Tavily）；LLM能力增强降低外部依赖；定价($3-10/1k)面临下行压力。</div>
 <div class="highlight-box success"><strong>不建议进入：</strong>融资&lt;$50M无索引能力 | 通用英语无差异化 | 纯商务无工程 | 期望6月盈利</div>
 </div>
 
@@ -169,6 +169,14 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <tr><td><strong>Linkup</strong></td><td>垂直高精度</td><td>$10M种子轮</td><td>开源benchmark，合规</td><td>KPMG, Artisan</td><td>Linkup博客</td></tr>
 <tr><td><strong>Perplexity Sonar</strong></td><td>搜索+摘要</td><td>母公司$200M ARR，$200亿估值</td><td>搜索+生成一体</td><td>开发者生态</td><td>TechCrunch</td></tr>
 </table></div>
+<h2>2.4 邻近玩家与已被收购标的</h2>
+<p>以下两家公司与本报告主赛道相邻但不完全重合，作为竞争格局补充信息列入：</p>
+<div class="table-wrap"><table>
+<tr><th>公司</th><th>定位</th><th>规模</th><th>与本市场关系</th><th>来源</th></tr>
+<tr><td><strong>Jina AI</strong>（已被Elastic收购）</td><td>搜索Grounding + Embedding</td><td>2025收入$6.3M，累计融资$38M，57人</td><td>s.jina.ai提供Web搜索/事实核查API，日处理1000亿token。2025.10被Elastic收购后归入平台能力，不再独立运营</td><td>Getlatka, Google Cloud博客, MarketScreener</td></tr>
+<tr><td><strong>Firecrawl</strong></td><td>Web数据抓取 + 搜索</td><td>Series A $14.5M（2025.8），50万开发者，114K GitHub stars</td><td>核心是爬取工具（/scrape），搜索(/search)为辅助端点。客户含OpenAI/Zapier/Shopify。开源PLG模式的典型代表</td><td>Firecrawl博客, GlobeNewsWire</td></tr>
+</table></div>
+<p class="note" style="font-size:13px;color:var(--text-muted);margin-top:8px;padding:12px;background:var(--bg-alt);border-radius:8px;border-left:3px solid var(--warning)"><strong>注：</strong>Jina AI被收购后归入Elastic平台，严格意义上已退出"独立第三方"范畴。Firecrawl核心产品为Web爬取而非搜索索引，搜索收入仅占其业务一部分。两者对本报告市场规模测算影响&lt;5%，不改变$100M-$200M（2026E）的核心估计。</p>
 </div>
 
 <div class="section" id="ch3">
@@ -196,12 +204,13 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 
 <div class="section" id="ch4">
 <h1>4. 客户获取与生态逻辑</h1>
-<h2>4.1 三种GTM模式</h2>
+<h2>4.1 四种已验证GTM模式</h2>
 <div class="table-wrap"><table>
 <tr><th>模式</th><th>做法</th><th>案例</th></tr>
 <tr><td><strong>框架生态集成</strong></td><td>成为LangChain/MCP默认工具</td><td>Tavily+Exa为LangChain官方集成</td></tr>
 <tr><td><strong>云厂商联合</strong></td><td>共建方案借渠道获客</td><td>Tavily+IBM, Brave+Snowflake</td></tr>
 <tr><td><strong>Benchmark固化</strong></td><td>开源评测量化优势</td><td>Linkup SimpleQA/SealQA</td></tr>
+<tr><td><strong>开源PLG</strong></td><td>开源核心工具获取海量开发者，商业API转化付费</td><td>Firecrawl（114K stars→50万开发者→8万企业→OpenAI/Zapier付费）</td></tr>
 </table></div>
 <h2>4.2 选API即选生态</h2>
 <div class="highlight-box"><strong>核心洞察：</strong>“接谁的API”不只是技术选型，是在选择需求生态和客户群。</div>
@@ -256,6 +265,7 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <tr><td>融资/ARR比</td><td>Exa: $107M+ → $10M ARR (10:1)</td><td>Sacra Research</td></tr>
 <tr><td>时间到$10M ARR</td><td>Exa: ~4年（2021-2025.9）</td><td>Sacra Research</td></tr>
 <tr><td>收购估值</td><td>Tavily: $275M，100万开发者</td><td>Nebius公告</td></tr>
+<tr><td>收购退出(2)</td><td>Jina AI → Elastic（2025.10），$38M融资后被收购，$6.3M收入/57人</td><td>MarketScreener, Getlatka</td></tr>
 <tr><td>API定价</td><td>Tavily $8/1k; Brave $3-5/1k; SERP $0.3-1/1k</td><td>官网定价页</td></tr>
 </table></div>
 <h2>5.6 竞争风险</h2>
@@ -265,6 +275,7 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <tr><td>头部集中</td><td>Brave准垂断独立索引</td><td>Brave“唯一商用独立索引”</td></tr>
 <tr><td>技术替代</td><td>LLM能力增强降低Search API依赖</td><td>行业趋势 <span class="tag infer">推断</span></td></tr>
 <tr><td>定价压力</td><td>$3-10/1k可能向$0.3-1/1k靠近</td><td>Awesome Agents定价对比</td></tr>
+<tr><td>收购整合</td><td>大厂通过收购补搜索能力（Elastic买Jina AI, Nebius买Tavily），独立玩家数量可能加速减少</td><td>MarketScreener, Nebius公告</td></tr>
 </table></div>
 </div>
 
@@ -277,6 +288,8 @@ td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)
 <li>Nebius收购Tavily $275M — Nebius新闻稿, 2026.2.10</li>
 <li>Exa B轮$85M — Exa博客, 2025.9</li>
 <li>Exa C轮$81M — CB Insights</li>
+<li>Jina AI被Elastic收购 — MarketScreener, 2025.10</li>
+<li>Firecrawl Series A $14.5M — GlobeNewsWire, 2025.8</li>
 <li>Parallel A轮$100M — Parallel官网</li>
 <li>Linkup种子轮$10M — Linkup博客, 2026.2</li>
 <li>Brave索引400亿页 — Brave博客, 2025.12</li>
@@ -339,16 +352,18 @@ var KB=[
 {id:'s4',s:'ch2',t:'Brave',x:'Brave Search API:400亿页独立索引,日更1亿页。Bing退役后唯一大规模商用独立索引。SOC2合规。集成Snowflake。$3-5/1k。',k:['Brave','索引','独立','400亿','Snowflake']},
 {id:'s5',s:'ch2',t:'Parallel',x:'Parallel:前Twitter CEO创立,种子$30M+A轮$100M=$130M,估值$740M。2025.8产品上线。客户Clay/Harvey。多跳网络研究。',k:['Parallel','Parag','Twitter','融资','740']},
 {id:'s6',s:'ch2',t:'Linkup',x:'Linkup:垂直高精度,种子轮$10M(Gradient)。团队ex-Lyft/ex-McKinsey/ex-Spotify。客户KPMG/Artisan。开源SimpleQA/SealQA。',k:['Linkup','垂直','KPMG','法律','金融','benchmark']},
-{id:'s7',s:'ch2',t:'竞争对比',x:'主要竞争:Exa(语义$107M)/Tavily($275M收购100万开发者)/Brave(唯一索引400亿页)/Parallel($130M融资$740M)/Linkup(垂直KPMG)/Perplexity Sonar(搜索+摘要$200M)。',k:['竞争','对比','比较','谁','玩家','对手']},
+{id:'s7',s:'ch2',t:'竞争对比',x:'主要竞争:Exa(语义$107M)/Tavily($275M收购100万开发者)/Brave(唯一索引400亿页)/Parallel($130M融资$740M)/Linkup(垂直KPMG)/Perplexity Sonar(搜索+摘要$200M)。邻近玩家:Jina AI(搜索Grounding,$38M融资,2025.10被Elastic收购)/Firecrawl(Web爬取+搜索,$14.5M Series A,114K stars,50万开发者)。',k:['竞争','对比','比较','谁','玩家','对手','Jina','Firecrawl']},
+{id:'s8',s:'ch2',t:'Jina AI',x:'Jina AI:搜索Grounding+Embedding,累计融资$38M,2025收入$6.3M,57人。s.jina.ai日处理1000亿token。2025.10被Elastic收购,归入Elastic平台能力,不再独立运营。来源:Getlatka/Google Cloud博客/MarketScreener。',k:['Jina','Elastic','收购','Grounding','embedding']},
+{id:'s9',s:'ch2',t:'Firecrawl',x:'Firecrawl:Web数据抓取+搜索API。Series A $14.5M(2025.8)。50万开发者,114K GitHub stars,8万企业用户。客户OpenAI/Zapier/Shopify。核心是爬取(/scrape),搜索(/search)为辅。典型开源PLG模式。来源:Firecrawl博客/GlobeNewsWire。',k:['Firecrawl','爬取','开源','scrape','PLG','stars']},
 {id:'d1',s:'ch3',t:'客户分层',x:'四层:第一AI平台(IBM/Snowflake战略采购);第二AI原生(Cursor/Lovable规模消耗);第三传统企业(KPMG高客单价);第四中小开发者(生态引导)。',k:['客户','分层','谁在用','用户','分类']},
 {id:'d2',s:'ch3',t:'定价',x:'API定价:Tavily~$8/1k,Brave~$3-5/1k,SERP代理$0.3-1/1k。垂直行业(法律/金融)支付意愿高于通用(推断)。来源:官网定价页+Awesome Agents。',k:['定价','价格','多少钱','费用','cost']},
-{id:'g1',s:'ch4',t:'GTM模式',x:'三种GTM:1)框架生态(LangChain/MCP默认);2)云厂商联合(IBM+Tavily,Snowflake+Brave);3)Benchmark固化(Linkup SimpleQA)。不依赖重销售。',k:['GTM','获客','销售','怎么卖','模式']},
+{id:'g1',s:'ch4',t:'GTM模式',x:'四种GTM:1)框架生态(LangChain/MCP默认);2)云厂商联合(IBM+Tavily,Snowflake+Brave);3)Benchmark固化(Linkup SimpleQA);4)开源PLG(Firecrawl 114K stars→50万开发者→OpenAI/Zapier付费)。不依赖重销售。',k:['GTM','获客','销售','怎么卖','模式','开源','PLG']},
 {id:'g2',s:'ch4',t:'生态选择',x:'选API即选生态。IBM选Tavily为Watsonx Web入口;Snowflake选Brave为Cortex数据层;KPMG选Linkup为垂直合规。中小团队被LangChain默认引导。',k:['生态','选择','为什么选','IBM','Snowflake']},
 {id:'o1',s:'ch5',t:'三个机会',x:'结构性机会:1)垂直高精度(法律/金融,高支付);2)非英语市场洼地(日/韩/阿拉伯语本地化空白);3)实时性极端(秒级vs预索引矛盾)。',k:['机会','方向','做什么','进入','切入']},
 {id:'o2',s:'ch5',t:'路径选择',x:'五条:A自建PLG(Exa,$50M+,3-5年);B垂直标杆(Linkup,$5-20M,1-2年);C独立索引(Brave,$100M+);D资本叙事(Parallel,$100M+极高风险);E非英语垂直($10-30M,1-2年)。资源有限推荐：垂直行业精度（法律/金融）或非英语市场（日韩/阿拉伯语）。',k:['路径','怎么做','选择','推荐','方案','策略']},
 {id:'o3',s:'ch5',t:'不建议进入',x:'不建议:1)融资<$50M无索引;2)通用英语无差异化;3)无顶级背景走资本叙事;4)纯商务无工程;5)期望6月盈利(最短1-2年,Exa用了4年)。',k:['不建议','不要','风险','失败','不适合','别做']},
-{id:'o4',s:'ch5',t:'财务基准',x:'Exa融资$107M到$10M ARR(10:1)用了4年。Tavily $275M收购时100万开发者。定价Tavily $8/1k,Brave $3-5/1k。估值Exa $700M,Parallel $740M。',k:['财务','钱','多少','ARR','估值','收入']},
-{id:'o5',s:'ch5',t:'竞争风险',x:'风险:1)巨头回防(Azure/Vertex若降价);2)头部集中(Brave准垂断);3)技术替代(LLM增强);4)定价下行($3-10可能压缩);5)Parallel验证($740M估值vs不足1年产品)。',k:['风险','威胁','竞争','问题','挑战']},
+{id:'o4',s:'ch5',t:'财务基准',x:'Exa融资$107M到$10M ARR(10:1)用了4年。Tavily $275M收购时100万开发者。Jina AI $38M融资→$6.3M收入→被Elastic收购(退出路径参考)。定价Tavily $8/1k,Brave $3-5/1k。估值Exa $700M,Parallel $740M。',k:['财务','钱','多少','ARR','估值','收入','Jina']},
+{id:'o5',s:'ch5',t:'竞争风险',x:'风险:1)巨头回防(Azure/Vertex若降价);2)头部集中(Brave准垂断);3)技术替代(LLM增强);4)定价下行($3-10可能压缩);5)Parallel验证($740M估值vs不足1年产品);6)收购整合(Elastic买Jina AI/Nebius买Tavily,独立玩家加速减少)。',k:['风险','威胁','竞争','问题','挑战','收购','整合']},
 ];
 
 function tokenize(t){return t.toLowerCase().replace(/[^\u4e00-\u9fff\w]/g,' ').split(/\s+/).filter(function(w){return w.length>1})}
