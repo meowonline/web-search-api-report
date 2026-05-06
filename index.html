@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Search API 市场格局与业务机会研究</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root{--primary:#1F3864;--primary-light:#4472C4;--primary-lighter:#7BAFD4;--accent:#2E5090;--bg:#fff;--bg-alt:#f8fafc;--bg-card:#fff;--text:#1a1a2e;--text-sec:#555;--text-muted:#888;--border:#e2e8f0;--shadow:0 2px 12px rgba(0,0,0,.08);--shadow-lg:0 8px 32px rgba(0,0,0,.12);--radius:12px;--nav-w:260px;--chat-w:400px;--tr:0.3s cubic-bezier(.4,0,.2,1)}
+[data-theme=dark]{--bg:#0f172a;--bg-alt:#1e293b;--bg-card:#1e293b;--text:#e2e8f0;--text-sec:#94a3b8;--text-muted:#64748b;--border:#334155;--shadow:0 2px 12px rgba(0,0,0,.3);--shadow-lg:0 8px 32px rgba(0,0,0,.4)}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.7;color:var(--text);background:var(--bg);transition:background var(--tr),color var(--tr)}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:color-mix(in srgb,var(--bg) 85%,transparent);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}
+.header-title{font-weight:700;font-size:15px;color:var(--primary)}[data-theme=dark] .header-title{color:var(--primary-lighter)}
+.header-actions{display:flex;gap:8px;align-items:center}
+.btn{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-size:13px;cursor:pointer;transition:all var(--tr);font-weight:500}
+.btn:hover{border-color:var(--primary-light);color:var(--primary-light)}.btn-primary{background:var(--primary);color:#fff;border-color:var(--primary)}.btn-primary:hover{background:var(--accent)}
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:var(--nav-w);padding:20px 16px;overflow-y:auto;border-right:1px solid var(--border);background:var(--bg-alt);z-index:50;transition:transform var(--tr)}
+.sidebar a{display:block;padding:8px 12px;margin:2px 0;border-radius:8px;color:var(--text-sec);text-decoration:none;font-size:13px;transition:all var(--tr);border-left:3px solid transparent}
+.sidebar a:hover{background:var(--bg-card);color:var(--text)}.sidebar a.active{background:color-mix(in srgb,var(--primary-light) 12%,transparent);color:var(--primary);border-left-color:var(--primary-light);font-weight:600}
+.sidebar .nav-group{margin-top:16px}.sidebar .nav-group-title{font-size:11px;font-weight:700;text-transform:uppercase;color:var(--text-muted);padding:0 12px;margin-bottom:4px;letter-spacing:.5px}
+.main{margin-left:var(--nav-w);margin-top:56px;padding:40px 48px 80px;max-width:960px;transition:margin var(--tr)}
+.section{margin-bottom:48px;animation:fadeUp .5s ease both}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.section h1{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:16px;padding-bottom:12px;border-bottom:3px solid var(--primary-light)}
+[data-theme=dark] .section h1{color:var(--primary-lighter);border-bottom-color:var(--primary-lighter)}
+.section h2{font-size:22px;font-weight:700;color:var(--accent);margin:32px 0 12px}[data-theme=dark] .section h2{color:var(--primary-light)}
+.section h3{font-size:18px;font-weight:600;color:var(--text);margin:24px 0 8px}
+.section p,.section li{margin-bottom:8px;color:var(--text-sec)}.section ul{padding-left:20px}.section li{margin-bottom:6px}
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:16px 0}
+.summary-card{padding:20px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-card);box-shadow:var(--shadow);transition:all var(--tr)}
+.summary-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.summary-card h4{font-size:13px;color:var(--text-muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.summary-card .value{font-size:22px;font-weight:800;color:var(--primary)}[data-theme=dark] .summary-card .value{color:var(--primary-lighter)}
+.summary-card .desc{font-size:12px;color:var(--text-sec);margin-top:6px}
+.highlight-box{padding:16px 20px;border-radius:var(--radius);margin:16px 0;border-left:4px solid var(--primary-light);background:color-mix(in srgb,var(--primary-light) 6%,var(--bg))}
+.highlight-box.warning{border-left-color:#e74c3c;background:color-mix(in srgb,#e74c3c 6%,var(--bg))}
+.highlight-box.success{border-left-color:#2ca02c;background:color-mix(in srgb,#2ca02c 6%,var(--bg))}
+.table-wrap{overflow-x:auto;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}th{background:var(--primary);color:#fff;padding:12px 14px;text-align:left;font-weight:600;white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--text-sec)}tr:nth-child(even){background:var(--bg-alt)}tr:hover td{background:color-mix(in srgb,var(--primary-light) 8%,var(--bg))}
+.chart-container{width:100%;height:380px;margin:20px 0;border-radius:var(--radius);background:var(--bg-card);box-shadow:var(--shadow);padding:16px}.chart-container.tall{height:440px}
+.timeline{position:relative;padding-left:30px;margin:20px 0}.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--primary-light),var(--primary-lighter));border-radius:2px}
+.timeline-item{position:relative;margin-bottom:20px;padding-left:20px}.timeline-item::before{content:'';position:absolute;left:-26px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--primary-light);border:3px solid var(--bg)}
+.timeline-item .time{font-size:13px;font-weight:700;color:var(--primary)}[data-theme=dark] .timeline-item .time{color:var(--primary-lighter)}
+.timeline-item .event{font-size:14px;color:var(--text-sec);margin-top:2px}
+.chat-fab{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--primary);color:#fff;border:none;font-size:24px;cursor:pointer;box-shadow:var(--shadow-lg);z-index:200;transition:all var(--tr);display:flex;align-items:center;justify-content:center}
+.chat-fab:hover{transform:scale(1.1);background:var(--accent)}
+.chat-panel{position:fixed;bottom:24px;right:24px;width:var(--chat-w);height:600px;max-height:calc(100vh - 100px);border-radius:16px;background:var(--bg-card);border:1px solid var(--border);box-shadow:var(--shadow-lg);z-index:300;display:flex;flex-direction:column;overflow:hidden;transform:scale(.9) translateY(20px);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.chat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+.chat-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg-alt)}
+.chat-header h3{font-size:15px;font-weight:700;color:var(--text)}.chat-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted);padding:4px 8px;border-radius:6px}.chat-close:hover{background:var(--border)}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.chat-msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.5;animation:msgIn .3s ease both}@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.chat-msg.user{align-self:flex-end;background:var(--primary);color:#fff;border-bottom-right-radius:4px}
+.chat-msg.bot{align-self:flex-start;background:var(--bg-alt);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px}
+.chat-msg .source-link{display:inline-block;margin-top:6px;font-size:12px;color:var(--primary-light);cursor:pointer;text-decoration:underline}
+.chat-suggestions{padding:12px 16px;display:flex;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border)}
+.chat-suggestions button{padding:6px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg);color:var(--text-sec);font-size:12px;cursor:pointer;transition:all var(--tr)}
+.chat-suggestions button:hover{border-color:var(--primary-light);color:var(--primary);background:color-mix(in srgb,var(--primary-light) 8%,var(--bg))}
+.chat-input-wrap{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:8px;background:var(--bg-alt)}
+.chat-input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:14px;outline:none;transition:border-color var(--tr)}.chat-input:focus{border-color:var(--primary-light)}
+.chat-send{padding:10px 16px;border-radius:10px;border:none;background:var(--primary);color:#fff;font-size:14px;cursor:pointer;transition:background var(--tr)}.chat-send:hover{background:var(--accent)}
+.chat-settings{padding:12px 16px;border-top:1px solid var(--border);background:var(--bg-alt)}.chat-settings summary{font-size:12px;color:var(--text-muted);cursor:pointer;margin-bottom:8px}
+.chat-settings input,.chat-settings select{width:100%;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;margin-top:4px}
+.chat-settings label{font-size:12px;color:var(--text-sec);display:block;margin-top:8px}
+.present-overlay{position:fixed;inset:0;z-index:1000;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center}.present-overlay.active{display:flex}
+.present-slide{width:90%;max-width:1100px;padding:48px 64px;display:none;flex-direction:column;justify-content:center;animation:slideIn .4s ease both}@keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.present-slide.active{display:flex}.present-slide h1{font-size:36px;color:var(--primary);margin-bottom:24px}[data-theme=dark] .present-slide h1{color:var(--primary-lighter)}
+.present-slide .slide-content{font-size:20px;line-height:1.8;color:var(--text-sec)}.present-slide .slide-content li{margin-bottom:12px}
+.present-nav{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);display:flex;gap:12px;align-items:center;z-index:1001}
+.present-nav button{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);cursor:pointer;font-size:14px}.present-nav button:hover{background:var(--primary);color:#fff}
+.present-nav span{font-size:14px;color:var(--text-muted)}.present-exit{position:fixed;top:20px;right:20px;z-index:1001}
+.note{font-size:13px;color:var(--text-muted);font-style:italic;margin:8px 0;padding:8px 12px;background:var(--bg-alt);border-radius:6px}
+.tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:color-mix(in srgb,var(--primary-light) 15%,var(--bg));color:var(--primary-light)}
+.tag.infer{background:color-mix(in srgb,#e67e22 15%,var(--bg));color:#e67e22}strong{color:var(--text)}
+@media(max-width:900px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:24px 20px 80px}.chat-panel{width:calc(100vw - 32px);right:16px;bottom:16px;height:calc(100vh - 120px)}}
+@media print{.header,.sidebar,.chat-fab,.chat-panel,.present-overlay{display:none!important}.main{margin:0;padding:20px;max-width:100%}}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+<header class="header">
+<div style="display:flex;align-items:center;gap:12px">
+<button class="btn" id="menuToggle" style="display:none" onclick="document.querySelector('.sidebar').classList.toggle('open')">&#9776;</button>
+<span class="header-title">Web Search API — 市场与机会研究</span>
+</div>
+<div class="header-actions">
+<button class="btn" onclick="toggleTheme()" id="themeBtn">&#9789; 暗色</button>
+<button class="btn btn-primary" onclick="enterPresent()">&#9654; 演示模式</button>
+</div>
+</header>
+<nav class="sidebar" id="sidebar">
+<div class="nav-group"><div class="nav-group-title">概览</div><a href="#exec-summary" data-section="exec-summary">核心结论摘要</a></div>
+<div class="nav-group"><div class="nav-group-title">正文</div>
+<a href="#ch1" data-section="ch1">1. 市场规模</a>
+<a href="#ch2" data-section="ch2">2. 供给侧竞争格局</a>
+<a href="#ch3" data-section="ch3">3. 需求侧分析</a>
+<a href="#ch4" data-section="ch4">4. 客户获取与生态</a>
+<a href="#ch5" data-section="ch5">5. 机会、路径与风险</a>
+</div>
+<div class="nav-group"><div class="nav-group-title">附录</div><a href="#appendix" data-section="appendix">数据来源与可信度</a></div>
+</nav>
+<main class="main" id="mainContent">
+<div class="section" id="exec-summary">
+<h1>核心结论摘要</h1>
+<div class="summary-grid">
+<div class="summary-card"><h4>市场规模 (2026E)</h4><div class="value">$100M–$200M</div><div class="desc">独立三方 Web Search API，YoY ~100%</div></div>
+<div class="summary-card"><h4>核心驱动力</h4><div class="value">Bing退出 + Agent爆发</div><div class="desc">Bing API 2025.8退役 + AI Agent $7-12B</div></div>
+<div class="summary-card"><h4>头部融资</h4><div class="value">$130M+</div><div class="desc">Parallel $130M / Exa $107M+ / Tavily $275M收购</div></div>
+<div class="summary-card"><h4>推荐路径</h4><div class="value">路径B或E</div><div class="desc">垂直精度或非英语市场，$5M-30M，1-2年变现</div></div>
+</div>
+<div class="highlight-box"><strong>机会窗口：</strong><ul>
+<li><strong>机会一：</strong>垂直行业高精度需求（法律/金融/生命科学）— 支付意愿显著高于通用</li>
+<li><strong>机会二：</strong>非英语市场语义搜索洼地 — 技术成熟但本地化空白</li>
+<li><strong>机会三：</strong>实时性极端场景（金融交易/危机监测）— 与预索引根本矛盾</li></ul></div>
+<div class="highlight-box warning"><strong>关键风险：</strong>巨头回防（Vertex AI / Azure Grounding）；LLM能力增强降低外部依赖；定价($3-10/1k)面临下行压力。</div>
+<div class="highlight-box success"><strong>不建议进入：</strong>融资&lt;$50M无索引能力 | 通用英语无差异化 | 纯商务无工程 | 期望6月盈利</div>
+</div>
+
+<div class="section" id="ch1">
+<h1>1. 市场规模：约1-2亿美元的B2B基础设施细分市场</h1>
+<p><strong>定义边界：</strong>严格限定为独立第三方语义/传统搜索API（Exa、Tavily、Brave等），不含广义AI搜索引擎市场（$3.9B）、SERP代理（SerpAPI）、云厂商内嵌服务（Azure AI Grounding）。</p>
+<div class="chart-container" id="chartMarketSize"></div>
+<h2>1.1 Bottom-Up 测算</h2>
+<div class="table-wrap"><table>
+<tr><th>测算维度</th><th>2025年</th><th>2026E</th></tr>
+<tr><td>独立玩家存量 x 增速（1.5-2.5x）</td><td>$47M–$93M</td><td>$70M–$140M</td></tr>
+<tr><td>Bing API退役净释放</td><td>—</td><td>$20M–$40M</td></tr>
+<tr><td><strong>合计</strong></td><td><strong>$47M–$93M</strong></td><td><strong>$90M–$180M</strong></td></tr>
+</table></div>
+<p><strong>测算逻辑：</strong>Exa 2025.9 ARR $10M（Sacra Research）；Perplexity整体$200M（TechCrunch）；Tavily被$275M收购（Nebius公告）。增速假设1.5-2.5x基于Exa 11x YoY。</p>
+<h2>1.2 Top-Down 测算</h2>
+<div class="table-wrap"><table>
+<tr><th>方法</th><th>2025</th><th>2026E</th><th>来源</th></tr>
+<tr><td>企业GenAI支出穿透</td><td>$70M–$300M</td><td>—</td><td>IDC/Gartner 2025 GenAI $370亿; Web Grounding~20%</td></tr>
+<tr><td>AI Agent市场穿透</td><td>$25M–$70M</td><td>$35M–$165M</td><td>Markets and Markets $7.6B / Grand View Research $12.1B</td></tr>
+<tr><td>Brave查询量反推</td><td>$15M–$45M</td><td>$30M–$100M</td><td>Brave官方博客2025.12; 市场份额30-40%假设</td></tr>
+</table></div>
+<h2>1.3 市场演进时间线</h2>
+<div class="timeline">
+<div class="timeline-item"><span class="time">2024</span><div class="event">Tavily成立获LangChain集成；Parallel种子轮$30M；Exa从$880K加速</div></div>
+<div class="timeline-item"><span class="time">2025.5</span><div class="event">Microsoft宣布Bing Search API 8月退役</div></div>
+<div class="timeline-item"><span class="time">2025.8</span><div class="event">Bing API下线；Parallel产品上线；Brave成唯一大规模独立索引</div></div>
+<div class="timeline-item"><span class="time">2025.9</span><div class="event">Exa B轮$85M（$700M估值）；ARR $10M，YoY 11x</div></div>
+<div class="timeline-item"><span class="time">2025年底</span><div class="event">Perplexity ARR~$200M；Parallel A轮$100M（$740M估值）</div></div>
+<div class="timeline-item"><span class="time">2026.2</span><div class="event">Nebius收购Tavily $275M；Linkup种子轮$10M</div></div>
+<div class="timeline-item"><span class="time">2026.3</span><div class="event">Exa C轮$81M</div></div>
+<div class="timeline-item"><span class="time">2027.1</span><div class="event">Google Custom Search API完全下线（预期）</div></div>
+</div>
+</div>
+
+<div class="section" id="ch2">
+<h1>2. 供给侧：竞争格局与核心玩家</h1>
+<h2>2.1 巨头退出</h2>
+<ul>
+<li><strong>Bing Search API：</strong>2025.8.11退役（Microsoft Lifecycle）。迁移Azure AI Grounding，定价涨40-483%（serp.fast）</li>
+<li><strong>Google Custom Search API：</strong>停止新客户，2027.1完全下线（Google Developers）。推荐Vertex AI Search</li>
+</ul>
+<div class="highlight-box"><strong>影响：</strong>巨头退出释放不愿绑定云平台的需求。Brave成为“西方市场唯一商用独立索引”（Brave官方博客）。</div>
+<h2>2.2 竞争格局定位图</h2>
+<div class="chart-container tall" id="chartQuadrant"></div>
+<h2>2.3 核心玩家</h2>
+<div class="table-wrap"><table>
+<tr><th>公司</th><th>定位</th><th>融资/规模</th><th>核心能力</th><th>客户</th><th>来源</th></tr>
+<tr><td><strong>Exa</strong></td><td>语义索引，英语</td><td>$107M+融资，$10M ARR</td><td>embedding模型、大规模爬取</td><td>Cursor, Vercel, Lovable</td><td>Sacra Research</td></tr>
+<tr><td><strong>Tavily</strong></td><td>Agentic Search</td><td>$275M被收购；100万开发者</td><td>实时抓取，LangChain集成</td><td>IBM, Cohere, Groq</td><td>Nebius公告</td></tr>
+<tr><td><strong>Brave</strong></td><td>独立索引全能</td><td>400亿页索引，日更1亿页</td><td>SOC 2合规，平台BD</td><td>Snowflake</td><td>Brave博客</td></tr>
+<tr><td><strong>Parallel</strong></td><td>实时多跳研究</td><td>$130M融资，$740M估值</td><td>前Twitter CEO，复杂任务</td><td>Clay, Harvey</td><td>Parallel官网</td></tr>
+<tr><td><strong>Linkup</strong></td><td>垂直高精度</td><td>$10M种子轮</td><td>开源benchmark，合规</td><td>KPMG, Artisan</td><td>Linkup博客</td></tr>
+<tr><td><strong>Perplexity Sonar</strong></td><td>搜索+摘要</td><td>母公司$200M ARR，$200亿估值</td><td>搜索+生成一体</td><td>开发者生态</td><td>TechCrunch</td></tr>
+</table></div>
+</div>
+
+<div class="section" id="ch3">
+<h1>3. 需求侧：客户分层与行业场景</h1>
+<h2>3.1 客户分层</h2>
+<div class="chart-container tall" id="chartPyramid"></div>
+<h3>第一层：AI平台公司（战略采购）</h3>
+<p>Snowflake、IBM Watsonx、Cohere、Groq — 年度合同，看重合规和生态匹配</p>
+<h3>第二层：AI原生应用（规模消耗）</h3>
+<p>Cursor、Vercel v0、Lovable — 按量付费，重视语义质量和延迟</p>
+<h3>第三层：传统企业转型（场景采购）</h3>
+<p>KPMG、金融机构、法律科技 — 高客单价，关注合规审计和来源可溯</p>
+<h3>第四层：中小开发者（生态引导）</h3>
+<p>LangChain/MCP生态开发者 — 顺教程走，被框架默认锁定</p>
+<h2>3.2 行业定价</h2>
+<div class="table-wrap"><table>
+<tr><th>行业</th><th>核心用例</th><th>定价参考</th><th>依据</th></tr>
+<tr><td>法律科技</td><td>判例检索、合规监测</td><td>高于通用 <span class="tag infer">推断</span></td><td>Linkup标杆Legora</td></tr>
+<tr><td>金融服务</td><td>实时竞情、风险监测</td><td>高于通用 <span class="tag infer">推断</span></td><td>You.com主攻</td></tr>
+<tr><td>AI Agent通用</td><td>RAG、Tool use</td><td>$3–8/1k queries</td><td>Tavily $8, Brave $3-5</td></tr>
+<tr><td>代码开发</td><td>文档检索、技术问答</td><td>$3–8/1k queries</td><td>Cursor用Exa</td></tr>
+</table></div>
+<p class="note">定价来源：各公司官网、Awesome Agents对比（2026.5）</p>
+</div>
+
+<div class="section" id="ch4">
+<h1>4. 客户获取与生态逻辑</h1>
+<h2>4.1 三种GTM模式</h2>
+<div class="table-wrap"><table>
+<tr><th>模式</th><th>做法</th><th>案例</th></tr>
+<tr><td><strong>框架生态集成</strong></td><td>成为LangChain/MCP默认工具</td><td>Tavily+Exa为LangChain官方集成</td></tr>
+<tr><td><strong>云厂商联合</strong></td><td>共建方案借渠道获客</td><td>Tavily+IBM, Brave+Snowflake</td></tr>
+<tr><td><strong>Benchmark固化</strong></td><td>开源评测量化优势</td><td>Linkup SimpleQA/SealQA</td></tr>
+</table></div>
+<h2>4.2 选API即选生态</h2>
+<div class="highlight-box"><strong>核心洞察：</strong>“接谁的API”不只是技术选型，是在选择需求生态和客户群。</div>
+<ul>
+<li><strong>IBM选Tavily</strong> — 为Watsonx提供可控Web入口</li>
+<li><strong>Snowflake选Brave</strong> — 为Cortex Agents嵌入实时Web context</li>
+<li><strong>KPMG选Linkup</strong> — 追求高精度+可解释 benchmark</li>
+<li>中小团队被LangChain默认引导（→Tavily/Exa）</li>
+</ul>
+<h2>4.3 团队画像</h2>
+<p>工程驱动小团队、极高人效。Perplexity $200M ARR企业销售仅5人（Business Insider）。市场特征：“工程+生态集成”代替重销售。</p>
+</div>
+
+<div class="section" id="ch5">
+<h1>5. 机会窗口、进入路径与风险</h1>
+<h2>5.1 三个结构性机会</h2>
+<h3>机会一：垂直行业高精度</h3>
+<ul><li>法律/金融/生命科学需要“领域可信度”，而非“平均相关性”</li>
+<li>验证：Linkup+Legora, You.com+受监管行业, KPMG为Linkup客户</li></ul>
+<h3>机会二：非英语市场洼地</h3>
+<ul><li>所有主要玩家聚焦英语，Exa明确只做英语网络</li>
+<li>日/韩/阿拉伯/印尼语AI Agent需求增长但本地语义索引空白</li></ul>
+<h3>机会三：实时性极端场景</h3>
+<ul><li>金融交易/危机监测需秒级，与预索引架构根本矛盾</li>
+<li>切入点：专项实时抓取，不求全面求特定领域新鲜度极致</li></ul>
+<h2>5.2 路径选择</h2>
+<div class="chart-container tall" id="chartPaths"></div>
+<div class="table-wrap"><table>
+<tr><th>路径</th><th>代表</th><th>启动资金</th><th>变现</th><th>风险</th></tr>
+<tr><td><strong>A: 自建索引+PLG</strong></td><td>Exa</td><td>$50M+</td><td>3-5年</td><td>高</td></tr>
+<tr><td><strong>B: 垂直精度+标杆</strong></td><td>Linkup</td><td>$5-20M</td><td>1-2年</td><td>中</td></tr>
+<tr><td><strong>C: 独立索引+平台</strong></td><td>Brave</td><td>$100M+</td><td>3-5年</td><td>高</td></tr>
+<tr><td><strong>D: 资本叙事</strong></td><td>Parallel</td><td>$100M+</td><td>需2年验证</td><td>极高</td></tr>
+<tr><td><strong>E: 非英语垂直</strong></td><td>暂无</td><td>$10-30M</td><td>1-2年</td><td>中</td></tr>
+</table></div>
+<h2>5.3 路径组合</h2>
+<ul><li><strong>B+E</strong>: 特定语言市场的垂直精度（推荐组合）</li>
+<li><strong>A+B</strong>: 垂直启动后扩展通用（需$30M+和3年耐心）</li>
+<li><strong>互斥</strong>: A/C与D（技术vs叙事基因不同）；C对新玩家不可行</li></ul>
+<h2>5.4 不建议进入的情形</h2>
+<div class="table-wrap"><table>
+<tr><th>情形</th><th>原因</th></tr>
+<tr><td>融资&lt;$50M无索引能力</td><td>路径A/C不可行，若无行业知识则无竞争优势</td></tr>
+<tr><td>通用英语搜索无差异化</td><td>Exa/Brave/Tavily已占主要生态位</td></tr>
+<tr><td>无顶级背景走资本叙事</td><td>Parallel路径依赖前CEO+顶级VC，非通用可复制</td></tr>
+<tr><td>纯商务无工程能力</td><td>市场特征是工程驱动，重销售未被验证</td></tr>
+<tr><td>期望6月内盈利</td><td>最短路径(Linkup)也需1-2年；Exa用了4年到$10M</td></tr>
+</table></div>
+<h2>5.5 财务基准</h2>
+<div class="table-wrap"><table>
+<tr><th>指标</th><th>数据</th><th>来源</th></tr>
+<tr><td>融资/ARR比</td><td>Exa: $107M+ → $10M ARR (10:1)</td><td>Sacra Research</td></tr>
+<tr><td>时间到$10M ARR</td><td>Exa: ~4年（2021-2025.9）</td><td>Sacra Research</td></tr>
+<tr><td>收购估值</td><td>Tavily: $275M，100万开发者</td><td>Nebius公告</td></tr>
+<tr><td>API定价</td><td>Tavily $8/1k; Brave $3-5/1k; SERP $0.3-1/1k</td><td>官网定价页</td></tr>
+</table></div>
+<h2>5.6 竞争风险</h2>
+<div class="table-wrap"><table>
+<tr><th>风险</th><th>内容</th><th>依据</th></tr>
+<tr><td>巨头回防</td><td>Vertex AI / Azure Grounding若降价或开放独立入口</td><td>Azure涨价40-483%（serp.fast）</td></tr>
+<tr><td>头部集中</td><td>Brave准垂断独立索引</td><td>Brave“唯一商用独立索引”</td></tr>
+<tr><td>技术替代</td><td>LLM能力增强降低Search API依赖</td><td>行业趋势 <span class="tag infer">推断</span></td></tr>
+<tr><td>定价压力</td><td>$3-10/1k可能向$0.3-1/1k靠近</td><td>Awesome Agents定价对比</td></tr>
+</table></div>
+</div>
+
+<div class="section" id="appendix">
+<h1>附录：数据来源与可信度</h1>
+<h2>一级来源（官方）</h2>
+<ul>
+<li>Microsoft Bing API退役 — Microsoft Lifecycle, 2025.5</li>
+<li>Google Custom Search停止新注册 — Google Developers</li>
+<li>Nebius收购Tavily $275M — Nebius新闻稿, 2026.2.10</li>
+<li>Exa B轮$85M — Exa博客, 2025.9</li>
+<li>Exa C轮$81M — CB Insights</li>
+<li>Parallel A轮$100M — Parallel官网</li>
+<li>Linkup种子轮$10M — Linkup博客, 2026.2</li>
+<li>Brave索引400亿页 — Brave博客, 2025.12</li>
+<li>Tavily 100万开发者/300万月下载 — Nebius收购公告</li>
+</ul>
+<h2>二级来源（权威媒体）</h2>
+<ul>
+<li>Exa ARR $10M, YoY 11x — Sacra Research</li>
+<li>Perplexity ARR~$200M — TechCrunch, ARR Club</li>
+<li>Perplexity销售团5人 — Business Insider</li>
+<li>Parallel $740M估值 — VentureBurn, Economic Times</li>
+<li>AI Agent市场 — Markets and Markets $7.6B / Grand View Research $12.1B</li>
+<li>Azure定价涨幅 — serp.fast</li>
+<li>API定价对比 — Awesome Agents, 2026.5</li>
+</ul>
+<h2>三级来源（推断，标注[推断]）</h2>
+<ul>
+<li>员工规模 — LinkedIn+融资阶段推断</li>
+<li>市场测算 — ARR汇总+增速假设</li>
+<li>垂直行业支付意愿 — 定价差异+行业特征推断</li>
+</ul>
+<div class="highlight-box"><strong>免责声明：</strong>内部研究材料，基于截至2026年5月公开信息。标注[推断]为间接证据合理推测。无虚构或编造数据。</div>
+</div>
+</main>
+
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" title="AI 助手">&#128172;</button>
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header"><h3>&#128161; AI 研究助手</h3><button class="chat-close" onclick="toggleChat()">&times;</button></div>
+<div class="chat-suggestions">
+<button onclick="askSug(this)">市场有多大？</button>
+<button onclick="askSug(this)">谁是主要竞争对手？</button>
+<button onclick="askSug(this)">资金有限推荐哪条路？</button>
+<button onclick="askSug(this)">Exa和Tavily区别？</button>
+<button onclick="askSug(this)">哪些情况不建议进入？</button>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="chat-msg bot">你好！我是本报告的AI助手。可以问我关于Web Search API市场、竞争、路径的问题。<br><br>基础模式从报告中检索答案；配置API Key后可获得更深度分析。</div>
+</div>
+<div class="chat-input-wrap">
+<input class="chat-input" id="chatInput" placeholder="输入问题..." onkeydown="if(event.key==='Enter')sendChat()">
+<button class="chat-send" onclick="sendChat()">发送</button>
+</div>
+<details class="chat-settings">
+<summary>&#9881; AI增强（可选）</summary>
+<label>提供商<select id="aiProvider"><option value="openai">OpenAI (GPT-4o)</option><option value="deepseek">DeepSeek</option></select></label>
+<label>API Key<input type="password" id="aiApiKey" placeholder="sk-... 或 ds-..." onchange="saveKey()"></label>
+<p style="font-size:11px;color:var(--text-muted);margin-top:6px">Key仅存本地localStorage</p>
+</details>
+</div>
+<div class="present-overlay" id="presentOverlay"></div>
+
+<script>
+var KB=[
+{id:'m1',s:'ch1',t:'市场规模',x:'独立三方Web Search API市场2025年$50M-$100M，2026年$100M-$200M。YoY约100%，受Bing API退出和AI Agent爆发驱动。',k:['市场规模','TAM','多大','增速','亿','规模']},
+{id:'m2',s:'ch1',t:'市场定义',x:'严格限定为独立第三方搜索API（Exa、Tavily、Brave等），不含广义AI搜索($3.9B)、SERP代理、云厂商内嵌。',k:['定义','边界','范围','包含','不含']},
+{id:'m3',s:'ch1',t:'驱动力',x:'核心驱动:1)Bing API 2025.8退役;2)AI Agent市场$7-12B爆发;3)Google Custom Search停止新注册。',k:['驱动','为什么','增长','原因','Bing','Agent']},
+{id:'s1',s:'ch2',t:'巨头退出',x:'Bing 2025.8退役(Microsoft Lifecycle)，迁移Azure AI Grounding涨价40-483%。Google停止新客户2027.1下线。',k:['Bing','Google','退出','巨头','下线']},
+{id:'s2',s:'ch2',t:'Exa',x:'Exa:自建语义索引英语，融资$107M+，ARR $10M(2025.9)，YoY 11x。客户Cursor/Vercel/Lovable(Sacra)。估值$700M。embedding+大规模爬取。',k:['Exa','融资','ARR','语义','索引','Cursor']},
+{id:'s3',s:'ch2',t:'Tavily',x:'Tavily:2026.2被Nebius $275M收购。100万开发者,300万月SDK下载。LangChain深度集成。客户IBM/Cohere/Groq。定价~$8/1k。',k:['Tavily','收购','Nebius','LangChain','开发者']},
+{id:'s4',s:'ch2',t:'Brave',x:'Brave Search API:400亿页独立索引,日更1亿页。Bing退役后唯一大规模商用独立索引。SOC2合规。集成Snowflake。$3-5/1k。',k:['Brave','索引','独立','400亿','Snowflake']},
+{id:'s5',s:'ch2',t:'Parallel',x:'Parallel:前Twitter CEO创立,种子$30M+A轮$100M=$130M,估值$740M。2025.8产品上线。客户Clay/Harvey。多跳网络研究。',k:['Parallel','Parag','Twitter','融资','740']},
+{id:'s6',s:'ch2',t:'Linkup',x:'Linkup:垂直高精度,种子轮$10M(Gradient)。团队ex-Lyft/ex-McKinsey/ex-Spotify。客户KPMG/Artisan。开源SimpleQA/SealQA。',k:['Linkup','垂直','KPMG','法律','金融','benchmark']},
+{id:'s7',s:'ch2',t:'竞争对比',x:'主要竞争:Exa(语义$107M)/Tavily($275M收购100万开发者)/Brave(唯一索引400亿页)/Parallel($130M融资$740M)/Linkup(垂直KPMG)/Perplexity Sonar(搜索+摘要$200M)。',k:['竞争','对比','比较','谁','玩家','对手']},
+{id:'d1',s:'ch3',t:'客户分层',x:'四层:第一AI平台(IBM/Snowflake战略采购);第二AI原生(Cursor/Lovable规模消耗);第三传统企业(KPMG高客单价);第四中小开发者(生态引导)。',k:['客户','分层','谁在用','用户','分类']},
+{id:'d2',s:'ch3',t:'定价',x:'API定价:Tavily~$8/1k,Brave~$3-5/1k,SERP代理$0.3-1/1k。垂直行业(法律/金融)支付意愿高于通用(推断)。来源:官网定价页+Awesome Agents。',k:['定价','价格','多少钱','费用','cost']},
+{id:'g1',s:'ch4',t:'GTM模式',x:'三种GTM:1)框架生态(LangChain/MCP默认);2)云厂商联合(IBM+Tavily,Snowflake+Brave);3)Benchmark固化(Linkup SimpleQA)。不依赖重销售。',k:['GTM','获客','销售','怎么卖','模式']},
+{id:'g2',s:'ch4',t:'生态选择',x:'选API即选生态。IBM选Tavily为Watsonx Web入口;Snowflake选Brave为Cortex数据层;KPMG选Linkup为垂直合规。中小团队被LangChain默认引导。',k:['生态','选择','为什么选','IBM','Snowflake']},
+{id:'o1',s:'ch5',t:'三个机会',x:'结构性机会:1)垂直高精度(法律/金融,高支付);2)非英语市场洼地(日/韩/阿拉伯语本地化空白);3)实时性极端(秒级vs预索引矛盾)。',k:['机会','方向','做什么','进入','切入']},
+{id:'o2',s:'ch5',t:'路径选择',x:'五条:A自建PLG(Exa,$50M+,3-5年);B垂直标杆(Linkup,$5-20M,1-2年);C独立索引(Brave,$100M+);D资本叙事(Parallel,$100M+极高风险);E非英语垂直($10-30M,1-2年)。资源有限推荐B或E。',k:['路径','怎么做','选择','推荐','方案','策略']},
+{id:'o3',s:'ch5',t:'不建议进入',x:'不建议:1)融资<$50M无索引;2)通用英语无差异化;3)无顶级背景走资本叙事;4)纯商务无工程;5)期望6月盈利(最短1-2年,Exa用了4年)。',k:['不建议','不要','风险','失败','不适合','别做']},
+{id:'o4',s:'ch5',t:'财务基准',x:'Exa融资$107M到$10M ARR(10:1)用了4年。Tavily $275M收购时100万开发者。定价Tavily $8/1k,Brave $3-5/1k。估值Exa $700M,Parallel $740M。',k:['财务','钱','多少','ARR','估值','收入']},
+{id:'o5',s:'ch5',t:'竞争风险',x:'风险:1)巨头回防(Azure/Vertex若降价);2)头部集中(Brave准垂断);3)技术替代(LLM增强);4)定价下行($3-10可能压缩);5)Parallel验证($740M估值vs不足1年产品)。',k:['风险','威胁','竞争','问题','挑战']},
+];
+
+function tokenize(t){return t.toLowerCase().replace(/[^\u4e00-\u9fff\w]/g,' ').split(/\s+/).filter(function(w){return w.length>1})}
+function searchKB(q){var qt=tokenize(q);if(!qt.length)return[];return KB.map(function(c){var sc=0;var all=(c.x+' '+c.k.join(' ')).toLowerCase();qt.forEach(function(w){if(all.indexOf(w)>=0)sc+=3;c.k.forEach(function(kk){if(kk.indexOf(w)>=0||w.indexOf(kk)>=0)sc+=5})});return{id:c.id,s:c.s,t:c.t,x:c.x,sc:sc}}).filter(function(r){return r.sc>0}).sort(function(a,b){return b.sc-a.sc}).slice(0,5)}
+var chatOpen=false;
+function toggleChat(){chatOpen=!chatOpen;document.getElementById('chatPanel').classList.toggle('open',chatOpen);document.getElementById('chatFab').style.display=chatOpen?'none':'flex';if(chatOpen)document.getElementById('chatInput').focus()}
+function askSug(b){document.getElementById('chatInput').value=b.textContent;sendChat()}
+function addMsg(t,type,sec){var el=document.createElement('div');el.className='chat-msg '+type;var h=t.replace(/\n/g,"<br>");if(sec)h+='<br><span class="source-link" onclick="jumpTo(\''+sec+'\')">🔗 查看原文</span>';el.innerHTML=h;document.getElementById('chatMessages').appendChild(el);document.getElementById('chatMessages').scrollTop=99999}
+function jumpTo(id){toggleChat();document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'})}
+function sendChat(){var inp=document.getElementById('chatInput');var q=inp.value.trim();if(!q)return;inp.value='';addMsg(q,'user');var res=searchKB(q);var key=localStorage.getItem('ai_key');var prov=document.getElementById('aiProvider').value;if(key&&key.length>10){callLLM(q,res,key,prov)}else{if(!res.length){addMsg('抱歉，报告中没有找到相关内容。请换个说法或配置API Key。','bot')}else{var r='根据报告内容：\n\n';res.slice(0,3).forEach(function(c){r+='【'+c.t+'】'+c.x+'\n\n'});addMsg(r,'bot',res[0].s)}}}
+
+function callLLM(q,ctx,key,prov){var ctxT=ctx.map(function(c){return"["+c.t+"] "+c.x}).join("\n\n");var sys="你是Web Search API市场研究报告的AI助手。只回答与Web Search API市场、竞争、玩家、路径相关问题。无关礼貌拒绝。基于报告内容回答简洁结构化引用数据。\n\n报告内容:\n"+ctxT;var url,hd,bd;if(prov==="deepseek"){url="https://api.deepseek.com/chat/completions";hd={"Content-Type":"application/json","Authorization":"Bearer "+key};bd=JSON.stringify({model:"deepseek-chat",messages:[{role:"system",content:sys},{role:"user",content:q}],stream:true})}else{url="https://api.openai.com/v1/chat/completions";hd={"Content-Type":"application/json","Authorization":"Bearer "+key};bd=JSON.stringify({model:"gpt-4o",messages:[{role:"system",content:sys},{role:"user",content:q}],stream:true})}var mel=document.createElement("div");mel.className="chat-msg bot";mel.textContent="思考中...";document.getElementById("chatMessages").appendChild(mel);document.getElementById("chatMessages").scrollTop=99999;fetch(url,{method:"POST",headers:hd,body:bd}).then(function(r){if(!r.ok){mel.textContent="API错误: "+r.status;return}var rd=r.body.getReader();var dec=new TextDecoder();var ft="";mel.textContent="";function pump(){return rd.read().then(function(res){if(res.done)return;var ch=dec.decode(res.value);ch.split("\n").forEach(function(l){if(l.indexOf("data: ")===0){var d=l.slice(6);if(d==="[DONE]")return;try{var j=JSON.parse(d);var delta=j.choices&&j.choices[0]&&j.choices[0].delta&&j.choices[0].delta.content||"";ft+=delta;mel.innerHTML=ft.replace(/\n/g,"<br>")}catch(e){}}});document.getElementById("chatMessages").scrollTop=99999;return pump()})}return pump()}).catch(function(e){mel.textContent="请求失败: "+e.message})}
+function saveKey(){var k=document.getElementById('aiApiKey').value;if(k)localStorage.setItem('ai_key',k);localStorage.setItem('ai_prov',document.getElementById('aiProvider').value)}
+(function(){var k=localStorage.getItem('ai_key');if(k)document.getElementById('aiApiKey').value=k;var p=localStorage.getItem('ai_prov');if(p)document.getElementById('aiProvider').value=p})();
+
+function toggleTheme(){var d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'':'dark');document.getElementById('themeBtn').innerHTML=d?'&#9789; 暗色':'&#9788; 亮色';localStorage.setItem('theme',d?'':'dark');Object.values(CI).forEach(function(c){if(c)c.resize()})}
+(function(){if(localStorage.getItem('theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeBtn').innerHTML='&#9788; 亮色'}})();
+var secs=document.querySelectorAll('.section');var navs=document.querySelectorAll('.sidebar a');
+var obs=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){navs.forEach(function(l){l.classList.remove('active')});var l=document.querySelector('.sidebar a[data-section="'+e.target.id+'"]');if(l)l.classList.add('active')}})},{rootMargin:'-80px 0px -60% 0px'});
+secs.forEach(function(s){obs.observe(s)});
+(function(){var mq=window.matchMedia('(max-width:900px)');function ck(e){document.getElementById('menuToggle').style.display=e.matches?'block':'none'}mq.addEventListener('change',ck);ck(mq)})();
+
+var curSlide=0;
+var slides=[
+{t:'Web Search API 市场与机会',c:'<div class="summary-grid"><div class="summary-card"><h4>市场规模</h4><div class="value">$100M-$200M</div><div class="desc">2026E, YoY~100%</div></div><div class="summary-card"><h4>驱动力</h4><div class="value">Bing退出+Agent爆发</div></div><div class="summary-card"><h4>推荐路径</h4><div class="value">B或E</div><div class="desc">$5-30M, 1-2年</div></div></div>'},
+{t:'1. 市场规模',c:'<ul><li>2025: $50M-$100M → 2026: $100M-$200M (YoY~100%)</li><li>Bing API 2025.8退役 + AI Agent $7-12B</li><li>Google Custom Search停止新客户（2027.1下线）</li><li>定义：独立三方API，不含广义AI搜索/SERP代理/云内嵌</li></ul>'},
+{t:'2. 竞争格局',c:'<ul><li><b>Exa</b>: 语义领先, $107M+融资, $10M ARR, 11x</li><li><b>Tavily</b>: $275M被收购, 100万开发者, LangChain</li><li><b>Brave</b>: 400亿页唯一独立索引, $3-5/1k</li><li><b>Parallel</b>: $130M融资, $740M估值, 前Twitter CEO</li><li><b>Linkup</b>: 垂直精度, KPMG客户, $10M种子</li></ul>'},
+{t:'3. 需求侧',c:'<ul><li><b>第一层</b> AI平台(IBM/Snowflake) → 战略年度合同</li><li><b>第二层</b> AI原生(Cursor/Lovable) → 规模消耗</li><li><b>第三层</b> 传统企业(KPMG) → 高客单价POC</li><li><b>第四层</b> 中小开发者 → 被框架默认引导</li></ul><p>定价: Tavily $8/1k · Brave $3-5/1k · SERP $0.3-1/1k</p>'},
+{t:'4. GTM与生态',c:'<ul><li>模式一: 框架生态集成（LangChain/MCP默认）</li><li>模式二: 云厂商联合（IBM+Tavily, Snowflake+Brave）</li><li>模式三: Benchmark固化需求</li></ul><p><b>核心:</b> 选API即选生态。工程驱动+极高人效。</p>'},
+{t:'5. 机会与路径',c:'<ul><li><b>机会一</b>: 垂直行业高精度(法律/金融)</li><li><b>机会二</b>: 非英语市场洼地</li><li><b>机会三</b>: 实时性极端场景</li></ul><p><b>推荐:</b> 路径B($5-20M,1-2年) 或 E($10-30M,1-2年)</p>'},
+{t:'风险 & 不建议进入',c:'<ul><li>巨头回防 · 头部集中 · 技术替代 · 定价下行</li></ul><p><b>不建议:</b> 融资<$50M无索引 · 通用无差异化 · 纯商务 · 期望6月盈利</p>'}
+];
+function enterPresent(){curSlide=0;var o=document.getElementById('presentOverlay');o.classList.add('active');o.innerHTML='<button class="btn present-exit" onclick="exitPresent()">✕ 退出(ESC)</button><div class="present-nav"><button onclick="prevS()">◀</button><span id="sc"></span><button onclick="nextS()">▶</button></div>';slides.forEach(function(s,i){var d=document.createElement('div');d.className='present-slide'+(i===0?' active':'');d.innerHTML='<h1>'+s.t+'</h1><div class="slide-content">'+s.c+'</div>';o.insertBefore(d,o.querySelector('.present-nav'))});updSC();document.addEventListener('keydown',pKey)}
+function exitPresent(){document.getElementById('presentOverlay').classList.remove('active');document.getElementById('presentOverlay').innerHTML='';document.removeEventListener('keydown',pKey)}
+function pKey(e){if(e.key==='Escape')exitPresent();if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nextS()}if(e.key==='ArrowLeft')prevS()}
+function nextS(){if(curSlide<slides.length-1){curSlide++;showS()}}
+function prevS(){if(curSlide>0){curSlide--;showS()}}
+function showS(){document.querySelectorAll('.present-slide').forEach(function(s,i){s.classList.toggle('active',i===curSlide)});updSC()}
+function updSC(){var e=document.getElementById('sc');if(e)e.textContent=(curSlide+1)+' / '+slides.length}
+
+var CI={};
+function initCharts(){
+var c1=echarts.init(document.getElementById('chartMarketSize'));CI.m=c1;
+c1.setOption({tooltip:{trigger:'axis'},legend:{data:['低估计','高估计'],top:10},grid:{left:60,right:30,top:50,bottom:40},xAxis:{type:'category',data:['2025 Bottom-Up','2025 Top-Down','2026E Bottom-Up','2026E Top-Down']},yAxis:{type:'value',name:'$M',max:200},series:[{name:'低估计',type:'bar',data:[47,25,90,35],itemStyle:{color:'#7BAFD4'}},{name:'高估计',type:'bar',data:[93,70,180,165],itemStyle:{color:'#2E5090'}}]});
+var c2=echarts.init(document.getElementById('chartQuadrant'));CI.q=c2;
+c2.setOption({tooltip:{trigger:'item',formatter:function(p){return'<b>'+p.data[3]+'</b><br>'+p.data[4]}},grid:{left:60,right:40,top:50,bottom:50},xAxis:{name:'索引规模 →',nameLocation:'center',nameGap:30,min:0,max:10,splitLine:{lineStyle:{type:'dashed',color:'#eee'}}},yAxis:{name:'语义精度 →',nameLocation:'center',nameGap:40,min:0,max:10,splitLine:{lineStyle:{type:'dashed',color:'#eee'}}},series:[{type:'scatter',symbolSize:function(d){return Math.sqrt(d[2])*2.5},label:{show:true,formatter:function(p){return p.data[3]},position:'top',fontSize:11},data:[[9,5,100,'Brave','400亿页独立索引'],[6,8,107,'Exa','$107M+融资, $10M ARR'],[5.5,6,275,'Tavily','$275M收购, 100万开发者'],[4,7.5,130,'Parallel','$130M融资, 多跳研究'],[3,9,10,'Linkup','KPMG客户, 法律/金融'],[3.5,7.5,10,'You.com','受监管行业'],[7,6.5,200,'Perplexity','搜索+摘要, ~$200M ARR']],itemStyle:{color:function(p){return['#FF6B35','#4472C4','#2CA02C','#9467BD','#E377C2','#BCBD22','#17BECF'][p.dataIndex]}}}]});
+var c3=echarts.init(document.getElementById('chartPyramid'));CI.p=c3;
+c3.setOption({series:[{type:'funnel',left:'15%',top:30,bottom:20,width:'70%',sort:'ascending',gap:4,label:{show:true,position:'inside',fontSize:12,color:'#fff'},data:[{value:100,name:'第四层: 中小开发者 | 生态引导',itemStyle:{color:'#7BAFD4'}},{value:75,name:'第三层: 传统企业 | 高客单价',itemStyle:{color:'#4472C4'}},{value:50,name:'第二层: AI原生应用 | 规模消耗',itemStyle:{color:'#2E5090'}},{value:25,name:'第一层: AI平台 | 战略采购',itemStyle:{color:'#1F3864'}}]}]});
+var c4=echarts.init(document.getElementById('chartPaths'));CI.pa=c4;
+c4.setOption({tooltip:{trigger:'item',formatter:function(p){return'<b>'+p.data[3]+'</b><br>资金: '+p.data[4]+'<br>变现: '+p.data[5]}},grid:{left:80,right:40,top:50,bottom:50},xAxis:{name:'变现周期(年) →',nameLocation:'center',nameGap:30,min:0,max:6,splitLine:{lineStyle:{type:'dashed',color:'#eee'}}},yAxis:{name:'启动资金($M) →',nameLocation:'center',nameGap:50,min:0,max:150,splitLine:{lineStyle:{type:'dashed',color:'#eee'}}},series:[{type:'scatter',symbolSize:40,label:{show:true,formatter:function(p){return p.data[3]},fontSize:10,color:'#fff'},data:[[4,70,50,'A:PLG','$50M+','3-5年'],[1.5,12,20,'B:垂直','$5-20M','1-2年'],[4,120,100,'C:平台','$100M+','3-5年'],[2,120,100,'D:资本','$100M+','2年验证'],[1.5,20,30,'E:非英语','$10-30M','1-2年']],itemStyle:{color:function(p){return['#4472C4','#2CA02C','#FF6B35','#9467BD','#E377C2'][p.dataIndex]}}}],graphic:[{type:'rect',left:'8%',top:'45%',shape:{width:180,height:110},style:{fill:'rgba(44,160,44,0.08)',stroke:'#2CA02C',lineDash:[6,3]}},{type:'text',left:'10%',top:'48%',style:{text:'适合资源有限团队',fill:'#2CA02C',fontSize:11}}]});
+window.addEventListener('resize',function(){Object.values(CI).forEach(function(c){if(c)c.resize()})});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initCharts);else initCharts();
+</script>
+</body></html>
